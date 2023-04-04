@@ -1,0 +1,104 @@
+/*  removed this article sample after using fetch api in video no.27 */
+
+articles = [
+    {
+        "source": {
+            "id": "bbc-sport",
+            "name": "BBC Sport"
+        },
+        "author": null,
+        "title": "Cricket Scotland chairman quits after row over tackling racism",
+        "description": "BBC Scotland understands Anjan Luthra is stepping down following a controversy about the progress being made.",
+        "url": "http://www.bbc.co.uk/news/uk-scotland-65136207",
+        "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/9CBB/production/_129232104_anjan-standing-1-cropped.png",
+        "publishedAt": "2023-03-31T08:52:23.4095188Z",
+        "content": "The chairman of Cricket Scotland has stepped down, just five months after taking up the role and promising to clean up the sport's problem with racism. \r\nBBC Scotland understands Anjan Luthra has dec… [+1020 chars]"
+    },
+    {
+        "source": {
+            "id": "techcrunch",
+            "name": "TechCrunch"
+        },
+        "author": "Manish Singh",
+        "title": "Ambani bats for cricket glory as Disney scales back in India",
+        "description": "Reliance's Jio, which has heavily poached talent from Disney's Hotstar, is counting on the IPL cricket tournament to make a dent in streaming.",
+        "url": "https://techcrunch.com/2023/03/31/ambani-bats-for-cricket-glory-as-disney-scales-back/",
+        "urlToImage": "https://techcrunch.com/wp-content/uploads/2023/03/GettyImages-142507970.jpg?resize=1200,701",
+        "publishedAt": "2023-03-31T08:21:52Z",
+        "content": "Mukesh Ambanis Jio, the South Asian telecom powerhouse, has long sought to entice its customer base with a plethora of services aimed at boosting subscriber retention. Despite amassing over 425 mill… [+4123 chars]"
+    },
+    {
+        "source": {
+            "id": "espn-cric-info",
+            "name": "ESPN Cric Info"
+        },
+        "author": null,
+        "title": "PCB hands Umar Akmal three-year ban from all cricket | ESPNcricinfo.com",
+        "description": "Penalty after the batsman pleaded guilty to not reporting corrupt approaches | ESPNcricinfo.com",
+        "url": "http://www.espncricinfo.com/story/_/id/29103103/pcb-hands-umar-akmal-three-year-ban-all-cricket",
+        "urlToImage": "https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1099495_800x450.jpg",
+        "publishedAt": "2020-04-27T11:41:47Z",
+        "content": "Umar Akmal's troubled cricket career has hit its biggest roadblock yet, with the PCB handing him a ban from all representative cricket for three years after he pleaded guilty of failing to report det… [+1506 chars]"
+    },
+    {
+        "source": {
+            "id": "espn-cric-info",
+            "name": "ESPN Cric Info"
+        },
+        "author": null,
+        "title": "What we learned from watching the 1992 World Cup final in full again | ESPNcricinfo.com",
+        "description": "Wides, lbw calls, swing - plenty of things were different in white-ball cricket back then | ESPNcricinfo.com",
+        "url": "http://www.espncricinfo.com/story/_/id/28970907/learned-watching-1992-world-cup-final-full-again",
+        "urlToImage": "https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1219926_1296x729.jpg",
+        "publishedAt": "2020-03-30T15:26:05Z",
+        "content": "Last week, we at ESPNcricinfo did something we have been thinking of doing for eight years now: pretend-live ball-by-ball commentary for a classic cricket match. We knew the result, yes, but we tried… [+6823 chars]"
+    }
+]
+
+/* react router comp video-31*/
+{<News pageSize={12} country="in" category="science" />}
+
+/* making next and previous in a single fxn video-33 */
+handleNextClick = async () => {
+    console.log("next");
+    if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
+
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=00445c6972714be4afb6571398bfbabd&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+        this.setState({loading:true});
+        /* using fetch API */
+        let data = await fetch(url);
+        let parsedData = await data.json()
+        
+        this.setState({
+            page: this.state.page + 1,
+            articles: parsedData.articles,
+            loading:false
+        })
+    }
+
+}
+
+handlePreviousClick = async () => {
+
+    console.log("Previous")
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=00445c6972714be4afb6571398bfbabd&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+    /* using fetch API */
+    this.setState({loading:true});
+    let data = await fetch(url);
+    let parsedData = await data.json()
+    console.log(parsedData);
+
+    this.setState({
+        page: this.state.page - 1,
+        articles: parsedData.articles,
+        loading: false
+    })
+
+}
+
+/* vd35 */
+ {/*   <InfiniteScroll
+                    dataLength={this.state.articles.length}
+                    next={this.fetchMoreData}
+                    hasMore={this.state.articles.length!==this.state.totalResults}
+                    loader={Spin}> */}
