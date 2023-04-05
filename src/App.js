@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react'
-import NavBar from './componenet/NavBar';
-import News from './componenet/News';
-import Spin from './componenet/Spin';
+import NavBar from './component/NavBar';
+import News from './component/News';
+import Spin from './component/Spin';
 import {
   BrowserRouter,
   Routes,
